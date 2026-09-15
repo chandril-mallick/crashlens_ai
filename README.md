@@ -1,4 +1,4 @@
-# CrashLens AI 🔍
+# CrashLens AI 
 
 > **Privacy-first, on-device Android crash debugging assistant.**  
 > From "app crashed" to "here's a validated fix" in seconds — no crash log or source code leaves your device.
@@ -21,7 +21,7 @@
 
 ---
 
-## ✨ What it does
+## What it does
 
 CrashLens AI takes an Android Logcat crash / stack trace and:
 
@@ -34,7 +34,7 @@ All heavy inference is isolated on a background `Isolate` with a 25-second timeo
 
 ---
 
-## 🏗 Architecture
+## Architecture
 
 ```
 ┌──────────────────────────────────────────────┐
@@ -73,7 +73,7 @@ See [`docs/architecture.md`](docs/architecture.md) for a detailed breakdown.
 
 ---
 
-## 🛠 Tech Stack
+##  Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -148,7 +148,7 @@ The app launches in **Mock mode** — all 6 screens are navigable and analysis r
 1. Open the app → **Settings** tab
 2. Tap **Download Model** (~1.5 GB, Gemma 2B-it INT4)
 3. Once downloaded, toggle **"Use On-Device Model"**
-4. Import any crash log — analysis now runs fully on-device 🔒
+4. Import any crash log — analysis now runs fully on-device 
 
 ### Run the optional cloud fallback backend
 
@@ -184,7 +184,7 @@ Set `CLOUD_FALLBACK_URL` in Settings to point to your server.
 
 ---
 
-## 🗺 Roadmap
+##  Roadmap
 
 - [ ] ADB live logcat capture integration
 - [ ] Source file context attachment (show the actual crashing function)
