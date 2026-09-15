@@ -105,7 +105,7 @@ See [`docs/architecture.md`](docs/architecture.md) for full architectural breakd
 
 ---
 
-## 📂 Repository Structure
+##  Repository Structure
 
 ```
 crash_lens/
@@ -142,7 +142,7 @@ crash_lens/
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 ### Prerequisites
 - Flutter SDK ≥ 3.6.0
@@ -179,7 +179,7 @@ Set `CLOUD_FALLBACK_URL` in Settings to point to your server.
 
 ---
 
-## 📱 Screens & User Flow
+##  Screens & User Flow
 
 | Screen | Preview | Description |
 |---|---|---|
@@ -211,7 +211,7 @@ Set `CLOUD_FALLBACK_URL` in Settings to point to your server.
 
 ---
 
-## 📄 License
+##  License
 
 MIT — see [`LICENSE`](LICENSE).
 
