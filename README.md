@@ -36,40 +36,57 @@ All heavy inference is isolated on a background `Isolate` with a 25-second timeo
 
 ## Architecture
 
-```
-┌──────────────────────────────────────────────┐
-│               Flutter UI Layer               │
-│  HomeScreen → ImportScreen → AnalyzingScreen │
-│        → ResultScreen  HistoryScreen         │
-│              SettingsScreen                  │
-└──────────────┬───────────────────────────────┘
-               │  Provider (state management)
-┌──────────────▼───────────────────────────────┐
-│           CrashAnalysisProvider              │
-│  Orchestrates the full analysis pipeline     │
-└──┬──────────────┬───────────────┬────────────┘
-   │              │               │
-┌──▼──────┐ ┌────▼──────┐ ┌──────▼──────────┐
-│ Stack   │ │   LLM     │ │    Database     │
-│ Trace   │ │ Inference  │ │    Service      │
-│ Parser  │ │ Service   │ │  (SQLite/sqflite)│
-└─────────┘ └─────┬─────┘ └─────────────────┘
-                  │
-       ┌──────────┴──────────┐
-       │                     │
-┌──────▼──────┐    ┌─────────▼──────────┐
-│  Mock LLM   │    │  RealAnalysisService│
-│  (Demo mode)│    │  (flutter_gemma /  │
-└─────────────┘    │  on-device Gemma)  │
-                   └────────┬───────────┘
-                            │ (opt-in fallback)
-                   ┌────────▼───────────┐
-                   │ CloudFallbackService│
-                   │  /analyze-fallback  │
-                   └────────────────────┘
+```mermaid
+flowchart TD
+    subgraph UI["📱 Flutter UI Layer"]
+        HS["HomeScreen"]
+        IS["ImportScreen"]
+        AS["AnalyzingScreen"]
+        RS["ResultScreen"]
+        HIST["HistoryScreen"]
+        SET["SettingsScreen"]
+    end
+
+    subgraph STATE["⚡ State Management"]
+        CAP["CrashAnalysisProvider"]
+        HP["HistoryProvider"]
+        SP["SettingsProvider"]
+    end
+
+    subgraph SERVICES["⚙️ Core Services"]
+        STP["StackTraceParser"]
+        DBS["DatabaseService (SQLite)"]
+        MMS["ModelManagerService"]
+    end
+
+    subgraph INFERENCE["🔒 On-Device Engine"]
+        LLM_IF["LLMInferenceService"]
+        MOCK["MockAnalysisService"]
+        REAL["RealAnalysisService (Gemma 2B)"]
+    end
+
+    subgraph CLOUD["☁️ Cloud Fallback (Opt-In)"]
+        CFS["CloudFallbackService"]
+    end
+
+    IS --> CAP
+    CAP --> STP
+    CAP --> LLM_IF
+    LLM_IF --> MOCK
+    LLM_IF --> REAL
+    CAP --> RS
+    CAP --> DBS
+    HP --> DBS
+    LLM_IF -.-> CFS
+
+    style UI fill:#151B23,stroke:#3DDC84,color:#FFF
+    style STATE fill:#151B23,stroke:#61AFEF,color:#FFF
+    style SERVICES fill:#151B23,stroke:#E5C07B,color:#FFF
+    style INFERENCE fill:#0D1117,stroke:#3DDC84,stroke-width:2px,color:#FFF
+    style CLOUD fill:#151B23,stroke:#E06C75,stroke-dasharray: 5 5,color:#FFF
 ```
 
-See [`docs/architecture.md`](docs/architecture.md) for a detailed breakdown.
+See [`docs/architecture.md`](docs/architecture.md) for full architectural breakdown and sequence diagrams.
 
 ---
 
