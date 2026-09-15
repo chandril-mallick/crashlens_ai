@@ -1,0 +1,76 @@
+# Miscellaneous
+*.class
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+**/.DS_Store
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code (keep commented out — launch configs may be useful)
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+/coverage/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# ─── ML Model files ─────────────────────────────────────────────────────────
+# Never commit large model weights — they are downloaded at runtime
+*.tflite
+*.bin
+*.task
+*.onnx
+*.gguf
+*.ggml
+models/
+
+# ─── Secrets / API keys ─────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+secrets.json
+**/google-services.json
+**/GoogleService-Info.plist
+
+# ─── Python backend ──────────────────────────────────────────────────────────
+backend/venv/
+backend/__pycache__/
+backend/*.pyc
+backend/.env
+
+# ─── macOS junk ──────────────────────────────────────────────────────────────
+._*
+.AppleDouble
+.LSOverride
+Thumbs.db
+
+# ─── Flutter build logs ──────────────────────────────────────────────────────
+flutter_*.log

@@ -1,0 +1,57 @@
+name: crash_lens
+description: "CrashLens AI — Privacy-first, on-device Android debugging assistant."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.6.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Local storage
+  sqflite: ^2.4.1
+  path: ^1.9.1
+  path_provider: ^2.1.5
+
+  # Networking
+  http: ^1.2.2
+
+  # State management
+  provider: ^6.1.2
+
+  # UI / Fonts
+  google_fonts: ^6.2.1
+
+  # File import
+  file_picker: ^8.1.6
+
+  # Code highlighting
+  flutter_highlight: ^0.7.0
+
+  # Settings persistence
+  shared_preferences: ^2.3.5
+
+  # Utilities
+  uuid: ^4.5.1
+  intl: ^0.20.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/samples/
+    - assets/fonts/
+
+  fonts:
+    - family: JetBrainsMono
+      fonts:
+        - asset: assets/fonts/JetBrainsMono-Regular.ttf
+        - asset: assets/fonts/JetBrainsMono-Bold.ttf
+          weight: 700

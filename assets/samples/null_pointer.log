@@ -1,0 +1,20 @@
+--------- beginning of crash
+E/AndroidRuntime(12345): FATAL EXCEPTION: main
+E/AndroidRuntime(12345): Process: com.example.myapp, PID: 12345
+E/AndroidRuntime(12345): java.lang.NullPointerException: Attempt to invoke virtual method 'java.lang.String com.example.myapp.models.User.getName()' on a null object reference
+E/AndroidRuntime(12345): 	at com.example.myapp.MainActivity.onCreate(MainActivity.kt:42)
+E/AndroidRuntime(12345): 	at android.app.Activity.performCreate(Activity.java:8000)
+E/AndroidRuntime(12345): 	at android.app.Activity.performCreate(Activity.java:7984)
+E/AndroidRuntime(12345): 	at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1309)
+E/AndroidRuntime(12345): 	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:3404)
+E/AndroidRuntime(12345): 	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:3540)
+E/AndroidRuntime(12345): 	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:83)
+E/AndroidRuntime(12345): 	at android.app.servertransaction.TransactionExecutor.executeCallbacks(TransactionExecutor.java:135)
+E/AndroidRuntime(12345): 	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:95)
+E/AndroidRuntime(12345): 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2066)
+E/AndroidRuntime(12345): 	at android.os.Handler.dispatchMessage(Handler.java:106)
+E/AndroidRuntime(12345): 	at android.os.Looper.loop(Looper.java:223)
+E/AndroidRuntime(12345): 	at android.app.ActivityThread.main(ActivityThread.java:7656)
+E/AndroidRuntime(12345): 	at java.lang.reflect.Method.invoke(Native Method)
+E/AndroidRuntime(12345): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:592)
+E/AndroidRuntime(12345): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:947)

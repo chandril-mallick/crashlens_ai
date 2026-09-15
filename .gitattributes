@@ -1,0 +1,6 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Prevent macOS metadata files from being tracked
+.DS_Store export-ignore
+._* export-ignore

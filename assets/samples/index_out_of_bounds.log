@@ -1,0 +1,18 @@
+--------- beginning of crash
+E/AndroidRuntime(23456): FATAL EXCEPTION: main
+E/AndroidRuntime(23456): Process: com.example.shopapp, PID: 23456
+E/AndroidRuntime(23456): java.lang.IndexOutOfBoundsException: Index: 5, Size: 3
+E/AndroidRuntime(23456): 	at java.util.ArrayList.rangeCheck(ArrayList.java:659)
+E/AndroidRuntime(23456): 	at java.util.ArrayList.get(ArrayList.java:435)
+E/AndroidRuntime(23456): 	at com.example.shopapp.adapters.ProductAdapter.onBindViewHolder(ProductAdapter.kt:88)
+E/AndroidRuntime(23456): 	at com.example.shopapp.adapters.ProductAdapter.onBindViewHolder(ProductAdapter.kt:12)
+E/AndroidRuntime(23456): 	at androidx.recyclerview.widget.RecyclerView$Adapter.onBindViewHolder(RecyclerView.java:7065)
+E/AndroidRuntime(23456): 	at androidx.recyclerview.widget.RecyclerView$Recycler.tryBindViewHolderByDeadline(RecyclerView.java:6012)
+E/AndroidRuntime(23456): 	at androidx.recyclerview.widget.RecyclerView$Recycler.tryGetViewHolderForPositionByDeadline(RecyclerView.java:6279)
+E/AndroidRuntime(23456): 	at androidx.recyclerview.widget.GapWorker.prefetchPositionWithDeadline(GapWorker.java:290)
+E/AndroidRuntime(23456): 	at androidx.recyclerview.widget.GapWorker.flushTaskWithDeadline(GapWorker.java:343)
+E/AndroidRuntime(23456): 	at androidx.recyclerview.widget.GapWorker.flushScheduledTasks(GapWorker.java:396)
+E/AndroidRuntime(23456): 	at androidx.recyclerview.widget.GapWorker.run(GapWorker.java:424)
+E/AndroidRuntime(23456): 	at android.os.Handler.handleCallback(Handler.java:938)
+E/AndroidRuntime(23456): 	at android.os.Handler.dispatchMessage(Handler.java:99)
+E/AndroidRuntime(23456): 	at android.os.Looper.loop(Looper.java:223)

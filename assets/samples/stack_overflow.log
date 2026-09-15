@@ -1,0 +1,20 @@
+--------- beginning of crash
+E/AndroidRuntime(45678): FATAL EXCEPTION: main
+E/AndroidRuntime(45678): Process: com.example.treeview, PID: 45678
+E/AndroidRuntime(45678): java.lang.StackOverflowError: stack size 8MB
+E/AndroidRuntime(45678): 	at com.example.treeview.utils.DataProcessor.processNode(DataProcessor.kt:120)
+E/AndroidRuntime(45678): 	at com.example.treeview.utils.DataProcessor.processNode(DataProcessor.kt:123)
+E/AndroidRuntime(45678): 	at com.example.treeview.utils.DataProcessor.processNode(DataProcessor.kt:123)
+E/AndroidRuntime(45678): 	at com.example.treeview.utils.DataProcessor.processNode(DataProcessor.kt:123)
+E/AndroidRuntime(45678): 	at com.example.treeview.utils.DataProcessor.processNode(DataProcessor.kt:123)
+E/AndroidRuntime(45678): 	at com.example.treeview.utils.DataProcessor.processNode(DataProcessor.kt:123)
+E/AndroidRuntime(45678): 	at com.example.treeview.utils.DataProcessor.processNode(DataProcessor.kt:123)
+E/AndroidRuntime(45678): 	at com.example.treeview.utils.DataProcessor.processNode(DataProcessor.kt:123)
+E/AndroidRuntime(45678): 	at com.example.treeview.utils.DataProcessor.processNode(DataProcessor.kt:123)
+E/AndroidRuntime(45678): 	at com.example.treeview.ui.TreeViewModel.buildTree(TreeViewModel.kt:67)
+E/AndroidRuntime(45678): 	at com.example.treeview.ui.TreeActivity.onCreate(TreeActivity.kt:34)
+E/AndroidRuntime(45678): 	at android.app.Activity.performCreate(Activity.java:8000)
+E/AndroidRuntime(45678): 	at android.app.Activity.performCreate(Activity.java:7984)
+E/AndroidRuntime(45678): 	at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1309)
+E/AndroidRuntime(45678): 	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:3404)
+E/AndroidRuntime(45678): 	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:3540)

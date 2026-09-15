@@ -1,0 +1,19 @@
+--------- beginning of crash
+E/AndroidRuntime(34567): FATAL EXCEPTION: main
+E/AndroidRuntime(34567): Process: com.example.newsreader, PID: 34567
+E/AndroidRuntime(34567): android.os.NetworkOnMainThreadException
+E/AndroidRuntime(34567): 	at android.os.StrictMode$AndroidBlockGuardPolicy.onNetwork(StrictMode.java:1513)
+E/AndroidRuntime(34567): 	at java.net.Inet6AddressImpl.lookupHostByName(Inet6AddressImpl.java:117)
+E/AndroidRuntime(34567): 	at java.net.Inet6AddressImpl.lookupAllHostAddr(Inet6AddressImpl.java:105)
+E/AndroidRuntime(34567): 	at java.net.InetAddress.getAllByName(InetAddress.java:1154)
+E/AndroidRuntime(34567): 	at com.example.newsreader.network.ApiClient.fetchLatestArticles(ApiClient.kt:55)
+E/AndroidRuntime(34567): 	at com.example.newsreader.ui.HomeFragment.onResume(HomeFragment.kt:112)
+E/AndroidRuntime(34567): 	at android.app.Fragment.performResume(Fragment.java:2473)
+E/AndroidRuntime(34567): 	at android.app.FragmentManagerImpl.moveToState(FragmentManager.java:1356)
+E/AndroidRuntime(34567): 	at android.app.FragmentManagerImpl.moveFragmentToExpectedState(FragmentManager.java:1528)
+E/AndroidRuntime(34567): 	at android.app.FragmentManagerImpl.moveToState(FragmentManager.java:1595)
+E/AndroidRuntime(34567): 	at android.app.FragmentManagerImpl.dispatchStateChange(FragmentManager.java:3027)
+E/AndroidRuntime(34567): 	at android.app.FragmentManagerImpl.dispatchResume(FragmentManager.java:2991)
+E/AndroidRuntime(34567): 	at android.app.Activity.performResume(Activity.java:7937)
+E/AndroidRuntime(34567): 	at android.app.ActivityThread.performResumeActivity(ActivityThread.java:4496)
+E/AndroidRuntime(34567): 	at android.app.ActivityThread.handleResumeActivity(ActivityThread.java:4528)
