@@ -103,10 +103,10 @@ class _AnalyzingScreenState extends State<AnalyzingScreen> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 16, vertical: 14),
                     decoration: BoxDecoration(
-                      color: AppColors.accent.withOpacity(0.07),
+                      color: AppColors.accent.withValues(alpha: 0.07),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                          color: AppColors.accent.withOpacity(0.2), width: 1),
+                          color: AppColors.accent.withValues(alpha: 0.2), width: 1),
                     ),
                     child: Row(
                       children: [

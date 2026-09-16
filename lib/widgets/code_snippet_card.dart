@@ -54,7 +54,7 @@ class CodeSnippetCard extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                     decoration: BoxDecoration(
-                      color: AppColors.danger.withOpacity(0.15),
+                      color: AppColors.danger.withValues(alpha: 0.15),
                       borderRadius: BorderRadius.circular(4),
                     ),
                     child: Text(
@@ -101,7 +101,7 @@ class CodeSnippetCard extends StatelessWidget {
                               '${entry.key + 1}',
                               style: AppTextStyles.codeSmall.copyWith(
                                 color: isImplicated
-                                    ? AppColors.danger.withOpacity(0.6)
+                                    ? AppColors.danger.withValues(alpha: 0.6)
                                     : AppColors.textMuted,
                                 fontSize: 11,
                               ),

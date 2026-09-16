@@ -1,7 +1,33 @@
-# CrashLens AI 
+# CrashLens AI
 
-> **Privacy-first, on-device Android crash debugging assistant.**  
-> From "app crashed" to "here's a validated fix" in seconds — no crash log or source code leaves your device.
+> **CrashLens AI — go from Android crash to validated fix in seconds, entirely on-device.**
+
+[![Flutter](https://img.shields.io/badge/Flutter-3.6+-02569B?style=flat-square&logo=flutter)](https://flutter.dev)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
+[![Built for](https://img.shields.io/badge/iQOO_City_Battles-Hackathon_04-3DDC84?style=flat-square&logo=android)](https://iqoo.com)
+[![Privacy](https://img.shields.io/badge/Privacy-100%25_On--Device-success?style=flat-square&logo=security)](README.md#6-why-on-device-matters)
+
+---
+
+## 1. The Problem
+
+Debugging Android crashes in production or local builds is slow, tedious, and error-prone. Developers spend hours parsing multi-hundred-line logcat stack traces to isolate the implicated file and line. Furthermore, uploading proprietary source code or confidential crash dumps to cloud AI APIs poses severe privacy, security, and compliance risks for enterprise teams and developers alike.
+
+---
+
+## 2. The Solution
+
+**CrashLens AI** solves this with an instant, privacy-first, on-device Android debugging assistant. It ingests logcat stack traces, parses the failure context, matches the implicated source lines, and generates a confidence-ranked code patch with plain-English explanation — running 100% locally on the device with **zero data leaving the phone**.
+
+### Core Workflow
+1. **Capture**: Paste logcat dumps, load `.log`/`.txt` files, or pick from pre-loaded sample crash fixtures.
+2. **Parse**: Extract exception type, message, and isolate first-party app stack frames from framework noise.
+3. **Analyze**: Run local LLM inference via an on-device Gemma 2B model bundle on a background isolate.
+4. **Patch**: Render a color-coded unified code diff (`+`/`-`), root cause breakdown, and confidence score.
+
+---
+
+## 3. Screenshots
 
 <p align="center">
   <img src="docs/screenshots/home.png" width="180" alt="Home Screen"/>
@@ -9,32 +35,19 @@
   <img src="docs/screenshots/import.png" width="180" alt="Import Screen"/>
   &nbsp;&nbsp;
   <img src="docs/screenshots/analyzing.png" width="180" alt="Analyzing Screen"/>
-</p>
-
-<p align="center">
-  <img src="docs/screenshots/result.png" width="180" alt="Result Screen"/>
   &nbsp;&nbsp;
-  <img src="docs/screenshots/history.png" width="180" alt="History Screen"/>
+  <img src="docs/screenshots/result.png" width="180" alt="Result Screen"/>
   &nbsp;&nbsp;
   <img src="docs/screenshots/settings.png" width="180" alt="Settings Screen"/>
 </p>
 
----
-
-## What it does
-
-CrashLens AI takes an Android Logcat crash / stack trace and:
-
-1. **Parses** the stack trace — identifies the exception type, the first-party frame, and the full call chain.
-2. **Runs on-device LLM inference** (Gemma 2B-it via `flutter_gemma` / MediaPipe) to generate a root-cause explanation and a concrete code patch.
-3. **Presents a confidence-ranked fix** with a side-by-side diff view and a plain-English walkthrough.
-4. **Stores history locally** via SQLite — zero data ever sent to the cloud by default.
-
-All heavy inference is isolated on a background `Isolate` with a 25-second timeout so the UI stays buttery smooth.
+| Home | Import | Analyzing | Result | Settings |
+|---|---|---|---|---|
+| Dashboard & quick import | Stack trace paste & sample chips | Step-by-step progress & privacy badge | Root cause, patch diff & explanation | On-device model toggle & download manager |
 
 ---
 
-## Architecture
+## 4. Architecture Diagram
 
 ```mermaid
 flowchart TD
@@ -47,174 +60,133 @@ flowchart TD
         SET["SettingsScreen"]
     end
 
-    subgraph STATE["⚡ State Management"]
-        CAP["CrashAnalysisProvider"]
-        HP["HistoryProvider"]
-        SP["SettingsProvider"]
+    subgraph ENGINE["🔒 On-Device Inference Pipeline"]
+        STP["StackTraceParser (Pure Dart)"]
+        RAS["RealAnalysisService"]
+        ISO["Background Isolate (Isolate.run)"]
+        GEM["Gemma 2B INT4 Model (gemma-2b-it-q4_k_m.gguf)"]
     end
 
-    subgraph SERVICES["⚙️ Core Services"]
-        STP["StackTraceParser"]
-        DBS["DatabaseService (SQLite)"]
-        MMS["ModelManagerService"]
+    subgraph STORAGE["💾 Local Storage Layer"]
+        DBS["DatabaseService (SQLite / sqflite)"]
+        MMS["ModelManagerService (Path Provider)"]
     end
 
-    subgraph INFERENCE["🔒 On-Device Engine"]
-        LLM_IF["LLMInferenceService"]
-        MOCK["MockAnalysisService"]
-        REAL["RealAnalysisService (Gemma 2B)"]
+    subgraph BACKEND["☁️ Optional Companion Service (Opt-In Only)"]
+        FAST["FastAPI Backend (backend/main.py)"]
+        TEL["POST /telemetry (Anonymized Aggregate Counts Only)"]
+        MAN["GET /model-manifest (Version & SHA256 Checksums)"]
+        FALL["POST /analyze-fallback (Opt-In Gemini Fallback)"]
     end
 
-    subgraph CLOUD["☁️ Cloud Fallback (Opt-In)"]
-        CFS["CloudFallbackService"]
-    end
-
-    IS --> CAP
-    CAP --> STP
-    CAP --> LLM_IF
-    LLM_IF --> MOCK
-    LLM_IF --> REAL
-    CAP --> RS
-    CAP --> DBS
-    HP --> DBS
-    LLM_IF -.-> CFS
+    IS --> STP
+    STP --> RAS
+    RAS --> ISO
+    ISO --> GEM
+    RAS --> DBS
+    HIST --> DBS
+    RAS -. Opt-In Fallback .-> FAST
+    FAST --> FALL
+    FAST --> TEL
+    FAST --> MAN
 
     style UI fill:#151B23,stroke:#3DDC84,color:#FFF
-    style STATE fill:#151B23,stroke:#61AFEF,color:#FFF
-    style SERVICES fill:#151B23,stroke:#E5C07B,color:#FFF
-    style INFERENCE fill:#0D1117,stroke:#3DDC84,stroke-width:2px,color:#FFF
-    style CLOUD fill:#151B23,stroke:#E06C75,stroke-dasharray: 5 5,color:#FFF
-```
-
-See [`docs/architecture.md`](docs/architecture.md) for full architectural breakdown and sequence diagrams.
-
----
-
-##  Tech Stack
-
-| Layer | Technology |
-|---|---|
-| **Framework** | Flutter 3.x (Dart) |
-| **On-device LLM** | Gemma 2B-it INT4 via `flutter_gemma` / MediaPipe |
-| **State management** | Provider |
-| **Local storage** | SQLite (`sqflite`) |
-| **File import** | `file_picker` |
-| **Code rendering** | `flutter_highlight` + JetBrains Mono |
-| **Fonts** | Google Fonts (Inter/Manrope) + JetBrains Mono |
-| **Backend (opt-in)** | FastAPI + Python (cloud fallback only) |
-
----
-
-##  Repository Structure
-
-```
-crash_lens/
-├── README.md
-├── LICENSE
-├── .gitignore
-├── docs/
-│   ├── architecture.md       # Detailed architecture doc
-│   └── screenshots/
-│       ├── home.png
-│       ├── import.png
-│       ├── analyzing.png
-│       ├── result.png
-│       ├── history.png
-│       └── settings.png
-├── lib/                      # Flutter app source
-│   ├── main.dart
-│   ├── models/               # CrashReport, AnalysisResult, ParsedCrashContext
-│   ├── providers/            # CrashAnalysisProvider, HistoryProvider, SettingsProvider
-│   ├── screens/              # 6 app screens
-│   ├── services/             # LLM, parser, DB, model manager, cloud fallback
-│   ├── theme/                # AppTheme, colors, text styles
-│   └── widgets/              # Shared UI components
-├── assets/
-│   ├── samples/              # 4 sample crash log files for demo
-│   └── fonts/                # JetBrains Mono (Regular + Bold)
-├── android/                  # Android-specific config
-├── backend/                  # Optional FastAPI cloud fallback
-│   ├── main.py
-│   ├── requirements.txt
-│   └── README.md
-└── pubspec.yaml
+    style ENGINE fill:#0D1117,stroke:#3DDC84,stroke-width:2px,color:#FFF
+    style STORAGE fill:#151B23,stroke:#61AFEF,color:#FFF
+    style BACKEND fill:#151B23,stroke:#E06C75,stroke-dasharray: 5 5,color:#FFF
 ```
 
 ---
 
-##  Getting Started
+## 5. Tech Stack
 
-### Prerequisites
-- Flutter SDK ≥ 3.6.0
-- Android SDK (API 24+)
-- A physical Android device or emulator (API 24+)
+- **Mobile Framework**: Flutter 3.6+ (Dart)
+- **On-Device Inference**: Gemma 2B-it (INT4 / Q4_K_M quantized GGUF bundle via background `Isolate`)
+- **Stack Trace Parser**: Custom pure-Dart regex & grammar filter (`StackTraceParser`)
+- **Local Storage**: SQLite via `sqflite` (`crashlens.db`)
+- **Design System**: Dark Mode palette (`#0B0F14` bg, `#151B23` surface, `#3DDC84` Android green accent, Inter UI font, JetBrains Mono code font)
+- **Companion Backend**: Python 3.11 + FastAPI (`backend/main.py`)
 
-### Run in demo mode (no model download needed)
+---
+
+## 6. Why On-Device Matters
+
+1. **Air-Gapped Privacy**: Proprietary source code and internal stack traces never leave the device.
+2. **Zero Cloud Costs**: Eliminates recurring LLM API token costs per crash analysis.
+3. **Offline Reliability**: Works in airplane mode or low-connectivity mobile environments.
+4. **Latency Independence**: Immune to cloud API rate limits, outages, or network latency spikes.
+
+---
+
+## 7. Setup & Run Instructions
+
+### Mobile Application (`mobile / root`)
 
 ```bash
-git clone https://github.com/<your-username>/crashlens-ai.git
-cd crashlens-ai
+# 1. Clone the repository
+git clone https://github.com/chandril-mallick/crashlens_ai.git
+cd crashlens_ai
+
+# 2. Install dependencies
 flutter pub get
+
+# 3. Analyze code
+dart analyze
+
+# 4. Run application
 flutter run
 ```
 
-The app launches in **Mock mode** — all 6 screens are navigable and analysis results are simulated instantly. No LLM download required.
-
-### Enable real on-device inference
-
-1. Open the app → **Settings** tab
-2. Tap **Download Model** (~1.5 GB, Gemma 2B-it INT4)
-3. Once downloaded, toggle **"Use On-Device Model"**
-4. Import any crash log — analysis now runs fully on-device 
-
-### Run the optional cloud fallback backend
+### Optional Companion Backend (`backend/`)
 
 ```bash
 cd backend
+
+# 1. Create & activate virtual environment
+python -m venv venv
+source venv/bin/activate
+
+# 2. Install dependencies
 pip install -r requirements.txt
-uvicorn main:app --reload
+
+# 3. Run FastAPI server
+uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
-Set `CLOUD_FALLBACK_URL` in Settings to point to your server.
+---
+
+## 8. Build Process (Phone-First Hybrid Format)
+
+CrashLens AI was built following the **iQOO City Battles hybrid build format**:
+
+- **Red Light (~55% of build time)**: Code editing, prompt engineering, UI polish, copy, and live demo testing performed directly on the **iQOO 15 device** via **iQOO Office Kit** screen mirroring and mobile editing.
+- **Green Light (~45% of build time)**: Heavy Gradle compilation, Flutter SDK scaffolding, and native engine bundle setup completed on laptop.
 
 ---
 
-##  Screens & User Flow
+## 9. Demo Video Link
 
-| Screen | Preview | Description |
-|---|---|---|
-| **Home** | [`home.png`](docs/screenshots/home.png) | Dashboard with active mode badge, terminal preview, and quick import CTA |
-| **Import** | [`import.png`](docs/screenshots/import.png) | Stack trace text area, sample crash chips, and `.log`/`.txt` file picker |
-| **Analyzing** | [`analyzing.png`](docs/screenshots/analyzing.png) | Animated 4-step progress (Parse → Source → Infer → Rank) |
-| **Result** | [`result.png`](docs/screenshots/result.png) | Confidence score, root cause, code patch diff viewer, and explanation |
-| **History** | [`history.png`](docs/screenshots/history.png) | SQLite-backed searchable log archive with on-device badges |
-| **Settings** | [`settings.png`](docs/screenshots/settings.png) | On-device model manager, download progress, and cloud fallback toggle |
+📹 **Watch the 2-minute Walkthrough Video**: [Demo Video Placeholder / Link](https://youtube.com)
 
 ---
 
-## 🔒 Privacy
+## 10. Team & Attribution
 
-- **Zero telemetry.** No crash data, stack traces, or source code is ever sent anywhere by default.
-- The on-device model runs in an isolated background `Isolate` — never touches the network.
-- Cloud fallback is **opt-in only**, gated by an explicit toggle in Settings.
-- All history is stored locally in SQLite — never synced.
-
----
-
-##  Roadmap
-
-- [ ] ADB live logcat capture integration
-- [ ] Source file context attachment (show the actual crashing function)
-- [ ] Team shared history (opt-in, encrypted)
-- [ ] VS Code / Android Studio extension
-- [ ] iOS support (CoreML backend)
+- **Built by**: Team CrashLens AI
+- **Event**: iQOO City Battles — Hackathon 04
+- **Platform Target**: Android (Phone-First, Hybrid Build)
 
 ---
 
-##  License
+## 11. Post-Hackathon Roadmap
 
-MIT — see [`LICENSE`](LICENSE).
+- [ ] **Live USB ADB Capture**: Automatically pull active crash logs from connected Android devices via ADB WebUSB.
+- [ ] **Multi-Language Support**: Expand stack trace parsing & patch generation to iOS (Swift/Obj-C) and Flutter/Dart exceptions.
+- [ ] **Team Aggregate Dashboard**: Aggregate anonymized crash categories via `POST /telemetry` to visualize team crash trends.
+- [ ] **IDE Extensions**: Android Studio & VS Code plugins for 1-click on-device fix application.
 
 ---
 
-*Built for the AI Hackathon 2026. Questions? Open an issue.*
+## 12. License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.

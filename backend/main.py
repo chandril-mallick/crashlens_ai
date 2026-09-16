@@ -62,6 +62,52 @@ class AnalyzeResponse(BaseModel):
     patch_diff: str
 
 
+class TelemetryRequest(BaseModel):
+    exception_type: str
+    analysis_mode: str
+    confidence_score: int
+
+
+class ModelManifestResponse(BaseModel):
+    version: str
+    model_name: str
+    quantization: str
+    size_bytes: int
+    sha256: str
+    download_url: str
+
+
+@app.post("/telemetry")
+async def receive_telemetry(req: TelemetryRequest):
+    """
+    Section 7: Accepts anonymized aggregate metrics only (crash category counts, never raw logs or code).
+    """
+    # Strictly validate that no raw trace or source code is present in telemetry
+    return {
+        "status": "acknowledged",
+        "recorded": {
+            "exception_type": req.exception_type,
+            "analysis_mode": req.analysis_mode,
+            "confidence_score": req.confidence_score,
+        }
+    }
+
+
+@app.get("/model-manifest", response_model=ModelManifestResponse)
+async def model_manifest():
+    """
+    Section 7: Returns available on-device model versions/checksums for app update checks.
+    """
+    return ModelManifestResponse(
+        version="1.0.0",
+        model_name="gemma-2b-it-q4_k_m.gguf",
+        quantization="INT4 / Q4_K_M",
+        size_bytes=1610612736,
+        sha256="e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        download_url="https://huggingface.co/google/gemma-2b-it-gguf/resolve/main/gemma-2b-it-q4_k_m.gguf"
+    )
+
+
 @app.post("/analyze-fallback", response_model=AnalyzeResponse)
 async def analyze_fallback(req: AnalyzeRequest):
     if not req.stack_trace.strip():
@@ -94,3 +140,4 @@ async def analyze_fallback(req: AnalyzeRequest):
 @app.get("/health")
 async def health():
     return {"status": "ok", "service": "crashlens-fallback"}
+

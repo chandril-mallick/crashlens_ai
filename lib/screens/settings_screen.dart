@@ -198,7 +198,7 @@ class _ToggleCard extends StatelessWidget {
         color: AppColors.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: value ? AppColors.accent.withOpacity(0.3) : AppColors.border,
+          color: value ? AppColors.accent.withValues(alpha: 0.3) : AppColors.border,
           width: 1,
         ),
       ),
@@ -213,7 +213,7 @@ class _ToggleCard extends StatelessWidget {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: iconColor.withOpacity(0.12),
+                    color: iconColor.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Icon(icon, color: iconColor, size: 22),

@@ -237,7 +237,7 @@ class AppTheme {
       ),
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: AppColors.surface,
-        indicatorColor: AppColors.accent.withOpacity(0.15),
+        indicatorColor: AppColors.accent.withValues(alpha: 0.15),
         labelTextStyle: WidgetStateProperty.all(AppTextStyles.labelSmall),
         iconTheme: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {

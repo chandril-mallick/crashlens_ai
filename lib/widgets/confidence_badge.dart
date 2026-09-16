@@ -15,9 +15,9 @@ class ConfidenceBadge extends StatelessWidget {
   }
 
   Color get _bgColor {
-    if (score >= 80) return AppColors.accent.withOpacity(0.1);
-    if (score >= 50) return AppColors.warning.withOpacity(0.1);
-    return AppColors.textMuted.withOpacity(0.1);
+    if (score >= 80) return AppColors.accent.withValues(alpha: 0.1);
+    if (score >= 50) return AppColors.warning.withValues(alpha: 0.1);
+    return AppColors.textMuted.withValues(alpha: 0.1);
   }
 
   String get _label {
@@ -36,7 +36,7 @@ class ConfidenceBadge extends StatelessWidget {
       decoration: BoxDecoration(
         color: _bgColor,
         borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: _color.withOpacity(0.4), width: 1),
+        border: Border.all(color: _color.withValues(alpha: 0.4), width: 1),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
