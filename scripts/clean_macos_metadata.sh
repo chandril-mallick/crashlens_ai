@@ -4,6 +4,6 @@
 # Run before `flutter build apk` if you see "._*" errors in Gradle.
 set -euo pipefail
 
-echo "🧹 Cleaning macOS metadata files..."
+echo "Cleaning macOS metadata files..."
 find "$(dirname "$0")" -name "._*" -type f -delete
-echo "✅ Done. Run: flutter build apk --debug"
+echo "Done. Run: flutter build apk --debug"
