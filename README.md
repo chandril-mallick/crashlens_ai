@@ -168,7 +168,7 @@ The on-ground build (iQOO Battle 04, Hyderabad — 26–27 Sept) will follow iQO
 
 ## 9. Demo Video Link
 
- **Watch the 2-minute Walkthrough Video**:[ [Demo Video Placeholder / Link](https://youtube.com)](https://youtube.com/shorts/SO9WEFVJhIU?feature=share)
+ **Watch the Walkthrough Video**:(https://youtube.com/shorts/SO9WEFVJhIU?feature=share)
 
 ---
 
