@@ -20,6 +20,7 @@ Debugging Android crashes in production or local builds is slow, tedious, and er
 **CrashLens AI** solves this with an instant, privacy-first, on-device Android debugging assistant. It ingests logcat stack traces, parses the failure context, matches the implicated source lines, and generates a confidence-ranked code patch with plain-English explanation — running 100% locally on the device with **zero data leaving the phone**.
 
 ### Core Workflow
+
 1. **Capture**: Paste logcat dumps, load `.log`/`.txt` files, or pick from pre-loaded sample crash fixtures.
 2. **Parse**: Extract exception type, message, and isolate first-party app stack frames from framework noise.
 3. **Analyze**: Run local LLM inference via an on-device Gemma 2B model bundle on a background isolate.
@@ -31,18 +32,18 @@ Debugging Android crashes in production or local builds is slow, tedious, and er
 
 <p align="center">
   <img src="docs/screenshots/home.png" width="180" alt="Home Screen"/>
-  &nbsp;&nbsp;
+    
   <img src="docs/screenshots/import.png" width="180" alt="Import Screen"/>
-  &nbsp;&nbsp;
+    
   <img src="docs/screenshots/analyzing.png" width="180" alt="Analyzing Screen"/>
-  &nbsp;&nbsp;
+    
   <img src="docs/screenshots/result.png" width="180" alt="Result Screen"/>
-  &nbsp;&nbsp;
+    
   <img src="docs/screenshots/settings.png" width="180" alt="Settings Screen"/>
 </p>
 
-| Home | Import | Analyzing | Result | Settings |
-|---|---|---|---|---|
+| Home                     | Import                           | Analyzing                             | Result                               | Settings                                  |
+| ------------------------ | -------------------------------- | ------------------------------------- | ------------------------------------ | ----------------------------------------- |
 | Dashboard & quick import | Stack trace paste & sample chips | Step-by-step progress & privacy badge | Root cause, patch diff & explanation | On-device model toggle & download manager |
 
 ---
@@ -155,30 +156,34 @@ uvicorn main:app --host 0.0.0.0 --port 8000
 
 ---
 
-## 8. Build Process (Phone-First Hybrid Format)
 
-CrashLens AI was built following the **iQOO City Battles hybrid build format**:
+## 8. Build Process
 
-- **Red Light (~55% of build time)**: Code editing, prompt engineering, UI polish, copy, and live demo testing performed directly on the **iQOO 15 device** via **iQOO Office Kit** screen mirroring and mobile editing.
-- **Green Light (~45% of build time)**: Heavy Gradle compilation, Flutter SDK scaffolding, and native engine bundle setup completed on laptop.
+This repository reflects the Phase 1 prototype — built as a proof of concept ahead of the event for idea validation.
 
----
+The on-ground build (iQOO Battle 04, Hyderabad — 26–27 Sept) will follow iQOO's phone-first hybrid format:
+
+- **Red Light (~55% of build time)**: primary development on the iQOO 15 via iQOO Office Kit — laptop closed as a build machine.
+- **Green Light (~45%)**: laptop-assisted work for heavier compute (Gradle builds, model integration debugging).
 
 ## 9. Demo Video Link
 
-📹 **Watch the 2-minute Walkthrough Video**: [Demo Video Placeholder / Link](https://youtube.com)
+ **Watch the 2-minute Walkthrough Video**: [Demo Video Placeholder / Link](https://youtube.com)
 
 ---
 
 ## 10. Team & Attribution
 
-- **Built by**: Team CrashLens AI
+- **Team Name**: Deploy or Die (SF1YI2)
+- **Members**:
+  - Chandril mallick (chandrilmallick1@gmail.com) - Leader
+  - Farhan Islam Sekh (farhanrohit2004@gmail.com)
 - **Event**: iQOO City Battles — Hackathon 04
 - **Platform Target**: Android (Phone-First, Hybrid Build)
 
 ---
 
-## 11. Post-Hackathon Roadmap
+## 11. Post Roadmap
 
 - [ ] **Live USB ADB Capture**: Automatically pull active crash logs from connected Android devices via ADB WebUSB.
 - [ ] **Multi-Language Support**: Expand stack trace parsing & patch generation to iOS (Swift/Obj-C) and Flutter/Dart exceptions.
