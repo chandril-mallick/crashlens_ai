@@ -17,10 +17,10 @@ mkdir -p "$TARGET"
 if [ -L "$SYMLINK" ]; then
   rm "$SYMLINK"
 elif [ -d "$SYMLINK" ]; then
-  echo "  '$SYMLINK' is a real directory — removing it first."
+  echo "  '$SYMLINK' is a real directory - removing it first."
   rm -rf "$SYMLINK"
 fi
 
 ln -s "$TARGET" "$SYMLINK"
-echo " Symlink: $SYMLINK → $TARGET"
+echo " Symlink: $SYMLINK -> $TARGET"
 echo "   Run: flutter build apk --debug"
