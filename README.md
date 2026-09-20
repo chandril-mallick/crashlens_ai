@@ -168,7 +168,7 @@ The on-ground build (iQOO Battle 04, Hyderabad — 26–27 Sept) will follow iQO
 
 ## 9. Demo Video Link
 
- **Watch the 2-minute Walkthrough Video**: [Demo Video Placeholder / Link](https://youtube.com)
+ **Watch the 2-minute Walkthrough Video**:[ [Demo Video Placeholder / Link](https://youtube.com)](https://youtube.com/shorts/SO9WEFVJhIU?feature=share)
 
 ---
 
@@ -176,8 +176,8 @@ The on-ground build (iQOO Battle 04, Hyderabad — 26–27 Sept) will follow iQO
 
 - **Team Name**: Deploy or Die (SF1YI2)
 - **Members**:
-  - Chandril mallick (chandrilmallick1@gmail.com) - Leader
-  - Farhan Islam Sekh (farhanrohit2004@gmail.com)
+  - Chandril mallick  - Leader
+  - Farhan Islam Sekh 
 - **Event**: iQOO City Battles — Hackathon 04
 - **Platform Target**: Android (Phone-First, Hybrid Build)
 
